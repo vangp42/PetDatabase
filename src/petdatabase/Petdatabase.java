@@ -14,23 +14,16 @@ import java.util.Scanner;
  */
 public class Petdatabase {
 
-    /**
-     * @param args the command line arguments
-     */
+    //Create a Scanner
+    static Scanner input = new Scanner(System.in);
+
+    // Create an array list
+    static ArrayList<Pet> somePet = new ArrayList<Pet>();
+
     public static void main(String[] args) {
-        // TODO code application logic here
-
-        //Create a Scanner
-        Scanner input = new Scanner(System.in);
-
-        // Create an array list
-        ArrayList<Pet> somePet = new ArrayList<Pet>();
 
         // Define the variables
         int choice;
-        String name;
-        int age;
-        String done = "done";
 
         // Display Program
         System.out.println("Pet Database Program.");
@@ -57,101 +50,177 @@ public class Petdatabase {
             switch (choice) {
                 case 1:
                     // View all pets
-                    System.out.println("+----------------------+");
-                    System.out.printf("%-3s %-9s %4s\n", "| ID |", "NAME", "| AGE |");
-                    System.out.println("+----------------------+");
-
-                    // Loop through all pets
-                    for (Pet pet : somePet) {
-                        System.out.printf("%-3s %-9s\n", pet.getName(), pet.getAge());
-                    }
-                    System.out.println("+----------------------+");
+                    view();
+                    System.out.println(somePet.size() + " rows in set.");
                     System.out.println();
                     break;
                 case 2:
                     // Add more pets
-                    while (true) {
-                        System.out.print("add pet (name, age): ");
-                        name = input.next();
-                        age = input.nextInt();
-
-                        somePet.add(new Pet(name, age));
-
-                        System.out.println("Insert more? y/n");
-                        String x = input.next();
-                        char ch = x.charAt(0);
-                        if (ch == 'n') {
-                            break;
-                        }
-                    }
-//                    break;
+                    insert();
+                    System.out.println(somePet.size() + " pets in set.");
+                    System.out.println();
+                    break;
                 case 3:
                     // Update an existing pet
-                    System.out.println("Your choice is 3");
-                    System.out.println();
+                    edit();
                     break;
                 case 4:
                     // Remove an existing pet
-                    System.out.println("Your choice is 4");
+                    remove();
                     System.out.println();
                     break;
                 case 5:
                     // Search pets by name
-                    System.out.println("Your choice is 5");
+                    searchName();
+                    System.out.println(somePet.size() + " rows in set.");
                     System.out.println();
                     break;
                 case 6:
                     // Search pets by age
-                    System.out.println("Your choice is 6");
+                    searchAge();
+                    System.out.println(somePet.size() + " rows in set.");
                     System.out.println();
                     break;
                 default:
                     // Exit program
-                    System.out.println("Goodbye!");
-                    System.exit(0);
+                    exit();
             }
-
         } // End while
     }
 
-}
+    private static void view() {
+        int i = 0;
 
-class Pet {
+        System.out.println("+----------------------+");
+        System.out.printf("%-3s %-9s %4s\n", "| ID |", "NAME", "| AGE |");
+        System.out.println("+----------------------+");
 
-    private String name;
-    private int age;
+        // Loop through all pets
+        for (Pet pet : somePet) {
+            System.out.printf("%-3s %-9s %4s\n", "|  " + i, "| " + pet.getName(), "  |   " + pet.getAge() + " |");
+            i++;
+        }
 
-    public Pet(String name, int age) {
-        this.name = name;
-        this.age = age;
+        System.out.println("+----------------------+");
     }
 
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return name;
+    private static void insert() {
+
+        // Define the variables
+        String name;
+        int age;
+
+        while (true) {
+            System.out.print("add pet (name, age): ");
+            name = input.next();
+            age = input.nextInt();
+            somePet.add(new Pet(name, age));
+//            System.out.println(somePet.size() + " pets in set.");
+
+            System.out.println("Insert more? y/n");
+            String x = input.next();
+            char ch = x.charAt(0);
+            if (ch == 'n') {
+                break;
+            }
+        }
     }
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
+    private static void edit() {
+
     }
 
-    /**
-     * @return the age
-     */
-    public int getAge() {
-        return age;
+    private static void remove() {
+
     }
 
-    /**
-     * @param age the age to set
-     */
-    public void setAge(int age) {
-        this.age = age;
+    private static void searchName() {
+
+        int i = 0;
+        //List<Integer> I=new ArrayList<Integer>();
+        System.out.print("Enter a name to search: ");
+
+        String name = input.next();
+
+        System.out.println("+----------------------+");
+        System.out.printf("%-3s %-9s %4s\n", "| ID |", "NAME", "| AGE |");
+        System.out.println("+----------------------+");
+
+        for (Pet pet : somePet) {
+            if (pet.getName().equals(name)) {
+
+                System.out.printf("%-3s %-9s %4s\n", "|  " + i, "| " + pet.getName(), "  |   " + pet.getAge() + " |");
+            }
+            i++;
+        }
+        System.out.println("+----------------------+");
+    }
+
+    private static void searchAge() {
+        int i = 0;
+        //List<Integer> I=new ArrayList<Integer>();
+        System.out.print("Enter age to search: ");
+
+        int age = input.nextInt();
+
+        System.out.println("+----------------------+");
+        System.out.printf("%-3s %-9s %4s\n", "| ID |", "NAME", "| AGE |");
+        System.out.println("+----------------------+");
+
+        for (Pet pet : somePet) {
+            if (pet.getAge() == age) {
+
+                System.out.printf("%-3s %-9s %4s\n", "|  " + i, "| " + pet.getName(), "  |   " + pet.getAge() + " |");
+            }
+            i++;
+        }
+        System.out.println("+----------------------+");
+
+    }
+
+    private static void exit() {
+        System.out.println("Goodbye!");
+        System.exit(0);
+    }
+
+    private static class Pet {
+
+        private String name;
+        private int age;
+
+        public Pet(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        /**
+         * @return the name
+         */
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * @param name the name to set
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        /**
+         * @return the age
+         */
+        public int getAge() {
+            return age;
+        }
+
+        /**
+         * @param age the age to set
+         */
+        public void setAge(int age) {
+            this.age = age;
+        }
+
     }
 
 }
