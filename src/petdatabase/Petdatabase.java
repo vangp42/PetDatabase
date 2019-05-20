@@ -51,14 +51,10 @@ public class Petdatabase {
                 case 1:
                     // View all pets
                     view();
-                    System.out.println(somePet.size() + " rows in set.");
-                    System.out.println();
                     break;
                 case 2:
                     // Add more pets
                     insert();
-                    System.out.println(somePet.size() + " pets in set.");
-                    System.out.println();
                     break;
                 case 3:
                     // Update an existing pet
@@ -67,19 +63,14 @@ public class Petdatabase {
                 case 4:
                     // Remove an existing pet
                     remove();
-                    System.out.println();
                     break;
                 case 5:
                     // Search pets by name
                     searchName();
-                    System.out.println(somePet.size() + " rows in set.");
-                    System.out.println();
                     break;
                 case 6:
                     // Search pets by age
                     searchAge();
-                    System.out.println(somePet.size() + " rows in set.");
-                    System.out.println();
                     break;
                 default:
                     // Exit program
@@ -88,9 +79,11 @@ public class Petdatabase {
         } // End while
     }
 
+    // View all pets
     private static void view() {
+        
         int i = 0;
-
+        
         System.out.println("+----------------------+");
         System.out.printf("%-3s %-9s %4s\n", "| ID |", "NAME", "| AGE |");
         System.out.println("+----------------------+");
@@ -102,8 +95,11 @@ public class Petdatabase {
         }
 
         System.out.println("+----------------------+");
+        System.out.println(somePet.size() + " rows in set.");
+        System.out.println();
     }
 
+    // Add more pets
     private static void insert() {
 
         // Define the variables
@@ -115,31 +111,55 @@ public class Petdatabase {
             name = input.next();
             age = input.nextInt();
             somePet.add(new Pet(name, age));
-//            System.out.println(somePet.size() + " pets in set.");
 
             System.out.println("Insert more? y/n");
             String x = input.next();
             char ch = x.charAt(0);
             if (ch == 'n') {
+                System.out.println(somePet.size() + " pets in set.");
+                System.out.println();
                 break;
             }
         }
     }
 
+    // Update an existing pet
     private static void edit() {
 
+        view();
+        System.out.print("Enter the pet ID to update: ");
+        int id = input.nextInt();
+        System.out.println("Enter new name and new age: ");
+        String name = input.next();
+        int age = input.nextInt();
+
+        int i = 0;
+        for (Pet pet : somePet) {
+            if (i == id) {
+                pet.setName(name);
+                pet.setAge(age);
+            }
+            i++;
+        }
+        System.out.println();
     }
 
+    // Remove an existing pet
     private static void remove() {
 
+        view();
+        System.out.print("Enter the pet ID to remove: ");
+        int id = input.nextInt();
+        somePet.remove(id);
+        System.out.println("Selected pet ID has been removed.");
+        System.out.println();
     }
 
+    // Search pets by name
     private static void searchName() {
 
         int i = 0;
-        //List<Integer> I=new ArrayList<Integer>();
         System.out.print("Enter a name to search: ");
-
         String name = input.next();
 
         System.out.println("+----------------------+");
@@ -147,18 +167,21 @@ public class Petdatabase {
         System.out.println("+----------------------+");
 
         for (Pet pet : somePet) {
-            if (pet.getName().equals(name)) {
-
+            if (pet.getName().equalsIgnoreCase(name)) {
                 System.out.printf("%-3s %-9s %4s\n", "|  " + i, "| " + pet.getName(), "  |   " + pet.getAge() + " |");
             }
             i++;
         }
+
         System.out.println("+----------------------+");
+        System.out.println(somePet.size() + " rows in set.");
+        System.out.println();
     }
 
+    // Search pets by age
     private static void searchAge() {
+
         int i = 0;
-        //List<Integer> I=new ArrayList<Integer>();
         System.out.print("Enter age to search: ");
 
         int age = input.nextInt();
@@ -169,20 +192,23 @@ public class Petdatabase {
 
         for (Pet pet : somePet) {
             if (pet.getAge() == age) {
-
                 System.out.printf("%-3s %-9s %4s\n", "|  " + i, "| " + pet.getName(), "  |   " + pet.getAge() + " |");
             }
             i++;
         }
-        System.out.println("+----------------------+");
 
+        System.out.println("+----------------------+");
+        System.out.println(somePet.size() + " rows in set.");
+        System.out.println();
     }
 
+    // Exit program
     private static void exit() {
         System.out.println("Goodbye!");
         System.exit(0);
     }
 
+    // Pet class
     private static class Pet {
 
         private String name;
@@ -193,34 +219,20 @@ public class Petdatabase {
             this.age = age;
         }
 
-        /**
-         * @return the name
-         */
         public String getName() {
             return name;
         }
 
-        /**
-         * @param name the name to set
-         */
         public void setName(String name) {
             this.name = name;
         }
 
-        /**
-         * @return the age
-         */
         public int getAge() {
             return age;
         }
 
-        /**
-         * @param age the age to set
-         */
         public void setAge(int age) {
             this.age = age;
         }
-
     }
-
 }
