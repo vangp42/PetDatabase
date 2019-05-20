@@ -81,9 +81,9 @@ public class Petdatabase {
 
     // View all pets
     private static void view() {
-        
+
         int i = 0;
-        
+
         System.out.println("+----------------------+");
         System.out.printf("%-3s %-9s %4s\n", "| ID |", "NAME", "| AGE |");
         System.out.println("+----------------------+");
@@ -103,24 +103,19 @@ public class Petdatabase {
     private static void insert() {
 
         // Define the variables
-        String name;
+        String name = "";
         int age;
 
         while (true) {
             System.out.print("add pet (name, age): ");
             name = input.next();
-            age = input.nextInt();
-            somePet.add(new Pet(name, age));
-
-            System.out.println("Insert more? y/n");
-            String x = input.next();
-            char ch = x.charAt(0);
-            if (ch == 'n') {
-                System.out.println(somePet.size() + " pets in set.");
-                System.out.println();
+            if ("done".equalsIgnoreCase(name)) {
                 break;
             }
+            age = input.nextInt();
+            somePet.add(new Pet(name, age));
         }
+        System.out.println();
     }
 
     // Update an existing pet
