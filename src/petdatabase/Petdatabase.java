@@ -113,6 +113,9 @@ public class Petdatabase {
                 break;
             }
             age = input.nextInt();
+            if ((age < 1) || (age > 20)) {
+                System.out.println("Error: " + age + " is not a valid age.");
+            }
             somePet.add(new Pet(name, age));
         }
         System.out.println();
