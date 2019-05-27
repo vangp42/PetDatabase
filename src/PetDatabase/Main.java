@@ -7,12 +7,8 @@ package PetDatabase;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -134,14 +130,22 @@ public class Main {
                 System.out.println("Error: " + age + " is not a valid age.");
             }
             // Add name and age if age is greater or equal to 1 and less than eqaul 20
-            if (((age >= 1) && (age <= 20))) {
-                db.add(new Pet(name, age));
-            }
-//            if ((db.getCount() == 2)) {
-//                System.out.println();
-//                System.out.println("Error: Database is full.");
-//                break;
+//            if (((age >= 1) && (age <= 20))) {
+//                db.add(new Pet(name, age));
 //            }
+//            
+            if (((age >= 1) && (age <= 20))) {
+                if ((db.getCount() < 5)) {
+                    db.add(new Pet(name, age));
+
+                    
+                } else {
+                    System.out.println();
+                    System.out.println("Error: Database is full.");
+                    break;
+                }
+                
+            }
         }
         int count = db.getCount() - temp;
         System.out.println(count + " pets added.");
@@ -264,14 +268,14 @@ public class Main {
             Scanner input = new Scanner(System.in);
             File file = new File(input.nextLine());
             input = new Scanner(file);
-            
+
             while (input.hasNextLine()) {
                 String line = input.nextLine();
                 System.out.println(line);
                 String[] result = line.split(" ");
                 db.add(new Pet(result[0], Integer.parseInt(result[1])));
-            } 
-            System.out.println("File has been loaded.\n");
+            }
+            System.out.println("\nFile has been loaded.\n");
             input.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error: File does not exist...");
