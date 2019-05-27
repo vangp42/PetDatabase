@@ -5,6 +5,14 @@
  */
 package PetDatabase;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,7 +46,9 @@ public class Main {
             System.out.println(" 4) Remove an existing pet");
             System.out.println(" 5) Search pets by name");
             System.out.println(" 6) Search pets by age");
-            System.out.println(" 7) Exit program");
+            System.out.println(" 7) Load from textfile");
+            System.out.println(" 8) Save to textfile");
+            System.out.println(" 9) Exit program");
 
             // Input choice
             System.out.println();
@@ -71,6 +81,14 @@ public class Main {
                 case 6:
                     // Search pets by age
                     searchAge();
+                    break;
+                case 7:
+                    // Load file
+                    load();
+                    break;
+                case 8:
+                    // Save file
+                    save();
                     break;
                 default:
                     // Exit program
@@ -143,7 +161,7 @@ public class Main {
             if (((age >= 1) && (age <= 20))) {
                 db.add(new Pet(name, age));
             }
-//            if ((pets.size() == 2)) {
+//            if ((db.getCount() == 2)) {
 //                System.out.println();
 //                System.out.println("Error: Database is full.");
 //                break;
@@ -260,6 +278,55 @@ public class Main {
         }
         printTableFooter(match);
         System.out.println();
+    }
+
+    // Load from textfile
+    private static void load() {
+        ArrayList<Pet> pets = db.getPets();
+        try {
+            System.out.print("Enter the file name with extension to load from: ");
+            Scanner input = new Scanner(System.in);
+            File file = new File(input.nextLine());
+            input = new Scanner(file);
+            
+            while (input.hasNextLine()) {
+                String line = input.nextLine();
+                System.out.println(line);
+                String[] result = line.split(" ");
+                db.add(new Pet(result[0], Integer.parseInt(result[1])));
+            } 
+            System.out.println("File has been loaded.\n");
+            input.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File does not exist...");
+        }
+    }
+
+    // Save to textfile
+    private static void save() {
+        // ArrayList 
+        ArrayList<Pet> pets = db.getPets();
+        PrintWriter printWriter = null;
+        try {
+            System.out.print("Enter the file name with extension to save: ");
+            Scanner input = new Scanner(System.in);
+            File file = new File(input.nextLine());
+
+//            File file = new File("PetFile.txt");
+            printWriter = new PrintWriter(file);
+            for (int i = 0; i < pets.size(); i++) {
+                printWriter.println(pets.get(i).getName() + " " + pets.get(i).getAge());
+            }
+            System.out.println(file + " has been saved...");
+        } catch (IOException e) {
+            System.out.println("Error: Trouble saving the file.");
+        } finally {
+            if (printWriter != null) {
+                printWriter.close();
+            }
+        }
+        System.out.println();
+
     }
 
     // Exit program
