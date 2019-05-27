@@ -93,27 +93,57 @@ public class Main {
 
     // Add more pets
     private static void insert() {
+
+//        int tmp = db.getCount();
+//        input.nextLine();
+//        while (true) {
+//            System.out.print("add pet (name, age): ");
+//            String line = input.nextLine().trim();
+//            if (line.equalsIgnoreCase("done")) {
+//                break;
+//            }
+//            
+//            
+//            String[] result = line.split(" ");
+////            db.add(new Pet(result[0], Integer.parseInt(result[1])));
+//            
+//            if ((Integer.parseInt(result[1]) < 1) || (Integer.parseInt(result[1]) > 20)) {
+//                System.out.println("Error: " + Integer.parseInt(result[1]) + " is not a valid age.");
+//            }
+//            if (((Integer.parseInt(result[1]) >= 1) || (Integer.parseInt(result[1]) <= 20))) {
+//                db.add(new Pet(result[0], Integer.parseInt(result[1])));
+//            }
+//            
+//        }
+//        int count = db.getCount() - tmp;
+//        System.out.println(count + " pets added.");
         // Define the variables
         String name;
         int age;
         int temp = db.getCount();
 
+        ArrayList<Pet> pets = db.getPets();
+
         while (true) {
             System.out.print("add pet (name, age): ");
             name = input.next();
 
+            // Exit loop if name eauls "done"
             if (name.equalsIgnoreCase("done")) {
                 break;
             }
+
             age = input.nextInt();
+
+            // Print error if age is less than 1 and greater than 20
             if ((age < 1) || (age > 20)) {
                 System.out.println("Error: " + age + " is not a valid age.");
             }
-            if (((age >= 1) || (age <= 20))) {
+            // Add name and age if age is greater or equal to 1 and less than eqaul 20
+            if (((age >= 1) && (age <= 20))) {
                 db.add(new Pet(name, age));
             }
-
-//            if (somePet.size() == 2) {
+//            if ((pets.size() == 2)) {
 //                System.out.println();
 //                System.out.println("Error: Database is full.");
 //                break;
@@ -158,7 +188,7 @@ public class Main {
     // Remove an existing pet
     private static void remove() {
         // Define the variables
-        int id;
+        int id = 0;
         String name;
         int age;
 
@@ -166,15 +196,21 @@ public class Main {
         view();
 
         System.out.print("Enter the pet ID to remove: ");
-        id = input.nextInt();
-        db.remove(id);
 
-        // Object to get Pet based on ID
-        Pet pet = db.getPets().get(id);
-        name = pet.getName();
-        age = pet.getAge();
+        // Try catch for IndexOutOfBoundsException
+        try {
+            id = input.nextInt();
 
-        System.out.println(name + " " + age + " is removed.");
+            // Object to get Pet based on ID
+            Pet pet = db.getPets().get(id);
+            name = pet.getName();
+            age = pet.getAge();
+            db.remove(id - 1);
+            System.out.println(name + " " + age + " is removed.");
+
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error: ID " + id + " does not exist.");
+        }
         System.out.println();
     }
 
