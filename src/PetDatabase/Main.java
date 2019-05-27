@@ -111,30 +111,6 @@ public class Main {
 
     // Add more pets
     private static void insert() {
-
-//        int tmp = db.getCount();
-//        input.nextLine();
-//        while (true) {
-//            System.out.print("add pet (name, age): ");
-//            String line = input.nextLine().trim();
-//            if (line.equalsIgnoreCase("done")) {
-//                break;
-//            }
-//            
-//            
-//            String[] result = line.split(" ");
-////            db.add(new Pet(result[0], Integer.parseInt(result[1])));
-//            
-//            if ((Integer.parseInt(result[1]) < 1) || (Integer.parseInt(result[1]) > 20)) {
-//                System.out.println("Error: " + Integer.parseInt(result[1]) + " is not a valid age.");
-//            }
-//            if (((Integer.parseInt(result[1]) >= 1) || (Integer.parseInt(result[1]) <= 20))) {
-//                db.add(new Pet(result[0], Integer.parseInt(result[1])));
-//            }
-//            
-//        }
-//        int count = db.getCount() - tmp;
-//        System.out.println(count + " pets added.");
         // Define the variables
         String name;
         int age;
