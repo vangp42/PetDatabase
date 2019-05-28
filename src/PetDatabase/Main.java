@@ -104,14 +104,14 @@ public class Main {
         printTableFooter(db.getCount());
         System.out.println();
     }
-
+   
     // Add more pets
     private static void insert() {
         // Define the variables
         String name;
         int age;
         int temp = db.getCount();
-
+ 
         ArrayList<Pet> pets = db.getPets();
 
         while (true) {
@@ -122,29 +122,23 @@ public class Main {
             if (name.equalsIgnoreCase("done")) {
                 break;
             }
-
+            
             age = input.nextInt();
-
+            
             // Print error if age is less than 1 and greater than 20
             if ((age < 1) || (age > 20)) {
                 System.out.println("Error: " + age + " is not a valid age.");
             }
-            // Add name and age if age is greater or equal to 1 and less than eqaul 20
-//            if (((age >= 1) && (age <= 20))) {
-//                db.add(new Pet(name, age));
-//            }
-//            
+            // Add name and age if age is greater or equal to 1 and less than eqaul 20 
             if (((age >= 1) && (age <= 20))) {
                 if ((db.getCount() < 5)) {
                     db.add(new Pet(name, age));
-
-                    
                 } else {
                     System.out.println();
                     System.out.println("Error: Database is full.");
                     break;
                 }
-                
+
             }
         }
         int count = db.getCount() - temp;
@@ -203,7 +197,7 @@ public class Main {
             Pet pet = db.getPets().get(id);
             name = pet.getName();
             age = pet.getAge();
-            db.remove(id - 1);
+            db.remove(id);
             System.out.println(name + " " + age + " is removed.");
 
         } catch (IndexOutOfBoundsException e) {
